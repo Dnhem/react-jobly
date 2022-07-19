@@ -1,0 +1,15 @@
+.Form-container {
+  max-width: 500px;
+  border: 1px solid rgba(84, 82, 82, .2);
+  border-radius: 1em;
+  margin: 2em auto;
+  padding: 1em;
+}
+
+.Form-container h1 {
+  margin-top: 0;
+}
+
+.Form-container div {
+  margin-bottom: .2em;
+}
