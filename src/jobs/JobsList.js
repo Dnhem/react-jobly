@@ -15,7 +15,6 @@ const JobsList = () => {
     let jobResults = await JoblyApi.listAllJobs();
     setJobs(jobResults.jobs);
   }
-
   if (!jobs) return <Loading />;
 
   return (
@@ -23,6 +22,7 @@ const JobsList = () => {
       <h1>Jobs</h1>
       {jobs.map(j => (
         <JobCard
+          id={j.id}
           title={j.title}
           salary={j.salary}
           equity={j.equity}

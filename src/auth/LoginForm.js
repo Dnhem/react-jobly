@@ -24,9 +24,12 @@ const LoginForm = ({ login }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await login(formData);
-    history.push("/companies");
-    setFormData(initialState);
+    try {
+      await login(formData);
+      history.push("/");
+    } catch (errors) {
+      console.log(errors);
+    }
   }
 
   return (

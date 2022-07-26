@@ -47,9 +47,14 @@ class JoblyApi {
   }
 
   /** Get current user. */
-
   static async getCurrentUser(username) {
     let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  /** Update user info. */
+  static async updateUser(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
   }
 
@@ -58,6 +63,7 @@ class JoblyApi {
     let res = await this.request(`companies`);
     return res;
   }
+
   /** Get details on a company by handle. */
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
@@ -68,6 +74,11 @@ class JoblyApi {
   static async listAllJobs() {
     let res = await this.request(`jobs`);
     return res;
+  }
+
+  /** Apply to job. */
+  static async applyToJob(username, jobId) {
+    await this.request(`users/${username}/jobs/${jobId}`, {}, "post");
   }
 }
 

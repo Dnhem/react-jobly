@@ -6,13 +6,12 @@ import UserContext from "./auth/UserContext";
 
 const Homepage = () => {
   const { currentUser } = useContext(UserContext);
-
   return (
     <div>
       <h1>Jobly</h1>
       <p>Where winners find jobs.</p>
       {currentUser ? (
-        <h2>Welcome back {currentUser.firstName}!</h2>
+        <h2>Welcome back {currentUser.firstName || currentUser.username}!</h2>
       ) : (
         <div>
           <div className="Homepage-button-container">

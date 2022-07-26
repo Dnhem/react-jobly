@@ -8,3 +8,16 @@
   margin-bottom: 1em;
   padding: .5em;
 }
+
+.CompanyCard-link {
+  text-decoration: none;
+  color: black;
+}
+
+.CompanyCard-link:visited {
+  color: black;
+}
+
+.CompanyCard-link:hover {
+  color: blue;
+}

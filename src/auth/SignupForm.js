@@ -26,9 +26,12 @@ const SignupForm = ({ signup }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await signup(formData);
-    history.push("/companies");
-    setFormData(initialState);
+    let result = await signup(formData);
+    if (result.success) {
+      history.push("/welcome");
+    } else {
+      console.log(result.success);
+    }
   }
 
   return (

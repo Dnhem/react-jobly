@@ -6,10 +6,14 @@ import "./App.css";
 import JoblyApi from "./api";
 import jwt from "jsonwebtoken";
 import UserContext from "./auth/UserContext";
+import useLocalStorage from "./hooks/useLocalStorage";
+
+const TOKEN_STORAGE_ID = "jobly-token";
 
 function App() {
   const [ currentUser, setCurrentUser ] = useState(null);
-  const [ token, setToken ] = useState(null);
+  const [ applicationsIds, setApplicationsId ] = useState(new Set([]));
+  const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
 
   useEffect(
     function loadUserInfo() {
@@ -19,6 +23,7 @@ function App() {
             const { username } = jwt.decode(token);
             JoblyApi.token = token;
             let currentUser = await JoblyApi.getCurrentUser(username);
+            console.log(currentUser);
             setCurrentUser(currentUser);
           } catch (errors) {
             console.log(errors);
@@ -32,7 +37,7 @@ function App() {
 
   async function login(formData) {
     try {
-      const token = await JoblyApi.login(formData);
+      let token = await JoblyApi.login(formData);
       setToken(token);
       return { success: true };
     } catch (errors) {
@@ -43,7 +48,7 @@ function App() {
 
   async function signup(formData) {
     try {
-      const token = await JoblyApi.signup(formData);
+      let token = await JoblyApi.signup(formData);
       setToken(token);
       return { success: true };
     } catch (errors) {
@@ -57,15 +62,27 @@ function App() {
     setToken(null);
   }
 
+  function hasAppliedToJob(id) {
+    return applicationsIds.has(id);
+  }
+
+  function applyToJob(id) {
+    if (hasAppliedToJob(id)) return;
+    JoblyApi.applyToJob(currentUser.username, id);
+    setApplicationsId(new Set([ ...applicationsIds, id ]));
+  }
+
   return (
-    <div className="App">
-      <BrowserRouter>
-        <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <BrowserRouter>
+      <UserContext.Provider
+        value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}
+      >
+        <div className="App">
           <Navbar logout={logout} />
           <Routes signup={signup} login={login} />
-        </UserContext.Provider>
-      </BrowserRouter>
-    </div>
+        </div>
+      </UserContext.Provider>
+    </BrowserRouter>
   );
 }
 

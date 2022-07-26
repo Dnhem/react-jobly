@@ -6,7 +6,6 @@ const CompanyCard = ({ name, description, logoUrl }) => {
       <div className="CompanyCard-card">
         <h4>{name}</h4>
         <small>{description}</small>
-        <img src={logoUrl} alt={name} />
       </div>
     </div>
   );

@@ -3,10 +3,11 @@ import Homepage from "./Homepage";
 import CompanyList from "./companies/CompanyList";
 import CompanyDetails from "./companies/CompanyDetails";
 import JobsList from "./jobs/JobsList";
-import Profile from "./Profile";
+import ProfileForm from "./ProfileForm";
 import SignupForm from "./auth/SignupForm";
 import LoginForm from "./auth/LoginForm";
 import PrivateRoute from "./PrivateRoute";
+import Welcome from "./Welcome";
 
 const Routes = ({ login, signup }) => {
   return (
@@ -24,6 +25,10 @@ const Routes = ({ login, signup }) => {
           <LoginForm login={login} />
         </Route>
 
+        <Route exact path="/welcome">
+          <Welcome />
+        </Route>
+
         <PrivateRoute exact path="/companies">
           <CompanyList />
         </PrivateRoute>
@@ -37,7 +42,7 @@ const Routes = ({ login, signup }) => {
         </PrivateRoute>
 
         <PrivateRoute exact path="/profile">
-          <Profile />
+          <ProfileForm />
         </PrivateRoute>
 
         <Redirect to="/" />
